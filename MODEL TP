@@ -1,0 +1,129 @@
+-- 🔥 IQ OBBY HUB 🔥
+-- Teleport + Infinite Yield FE Admin
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local TextBox = Instance.new("TextBox")
+local TPButton = Instance.new("TextButton")
+local IYButton = Instance.new("TextButton")
+local CloseBtn = Instance.new("TextButton")
+local ToggleBtn = Instance.new("TextButton")
+
+-- GUI Setup
+ScreenGui.Parent = player:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.01, 0, 0.3, 0)
+Frame.Size = UDim2.new(0, 280, 0, 220)
+Frame.Active = true
+Frame.Draggable = true
+
+Title.Parent = Frame
+Title.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+Title.BorderSizePixel = 0
+Title.Size = UDim2.new(1, 0, 0, 40)
+Title.Font = Enum.Font.GothamBold
+Title.Text = "🧠 IQ OBBY HUB"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 18
+
+TextBox.Name = "TextBox"
+TextBox.Parent = Frame
+TextBox.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+TextBox.Position = UDim2.new(0.05, 0, 0.22, 0)
+TextBox.Size = UDim2.new(0.9, 0, 0, 35)
+TextBox.Font = Enum.Font.Gotham
+TextBox.PlaceholderText = "Enter model/part name (workspace)"
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.TextSize = 14
+
+TPButton.Name = "TPButton"
+TPButton.Parent = Frame
+TPButton.BackgroundColor3 = Color3.fromRGB(50, 150, 255)
+TPButton.Position = UDim2.new(0.05, 0, 0.42, 0)
+TPButton.Size = UDim2.new(0.9, 0, 0, 40)
+TPButton.Font = Enum.Font.GothamBold
+TPButton.Text = "🚀 TELEPORT TO MODEL"
+TPButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TPButton.TextSize = 14
+
+IYButton.Name = "IYButton"
+IYButton.Parent = Frame
+IYButton.BackgroundColor3 = Color3.fromRGB(100, 200, 50)
+IYButton.Position = UDim2.new(0.05, 0, 0.60, 0)
+IYButton.Size = UDim2.new(0.9, 0, 0, 40)
+IYButton.Font = Enum.Font.GothamBold
+IYButton.Text = "🌟 OPEN INFINITE YIELD FE"
+IYButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+IYButton.TextSize = 14
+
+ToggleBtn.Name = "ToggleBtn"
+ToggleBtn.Parent = Frame
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
+ToggleBtn.Position = UDim2.new(0.05, 0, 0.78, 0)
+ToggleBtn.Size = UDim2.new(0.9, 0, 0, 35)
+ToggleBtn.Font = Enum.Font.Gotham
+ToggleBtn.Text = "Hide GUI"
+ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleBtn.TextSize = 14
+
+CloseBtn.Name = "CloseBtn"
+CloseBtn.Parent = Frame
+CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+CloseBtn.Position = UDim2.new(0.85, 0, 0.05, 0)
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextSize = 16
+
+-- Toggle GUI
+ToggleBtn.MouseButton1Click:Connect(function()
+    Frame.Visible = not Frame.Visible
+    ToggleBtn.Text = Frame.Visible and "Hide GUI" or "Show GUI"
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+-- TELEPORT FUNCTION
+TPButton.MouseButton1Click:Connect(function()
+    local modelName = TextBox.Text
+    if modelName == "" then
+        print("❌ Enter a model/part name!")
+        return
+    end
+    
+    local target = workspace:FindFirstChild(modelName, true)
+    if target and target:IsA("BasePart") then
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = target.CFrame + Vector3.new(0, 5, 0)
+            print("✅ Teleported to " .. modelName)
+        end
+    else
+        print("❌ Model '" .. modelName .. "' not found in workspace!")
+    end
+end)
+
+-- INFINITE YIELD FE ADMIN
+IYButton.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    print("🌟 Infinite Yield FE loaded!")
+end)
+
+print("🧠 IQ OBBY HUB LOADED!")
+print("📝 Type model name → TELEPORT button")
+print("🌟 IY button opens Infinite Yield FE")
+print("📱 GUI is draggable!")
