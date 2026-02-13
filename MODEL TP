@@ -1,330 +1,104 @@
--- 🧠 IQ OBBY HUB v2.0 | ULTIMATE EDITION
--- Teleport to ANY part/model + Infinite Yield + Dex Explorer
+-- ⚡ INSTANT INTERACT HACK ⚡
+-- Auto-fires ALL ProximityPrompts instantly (E/F/G buttons)
 
+local ProximityPromptService = game:GetService("ProximityPromptService")
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 
 local ScreenGui = Instance.new("ScreenGui")
-local MainFrame = Instance.new("Frame")
-local TitleBar = Instance.new("Frame")
-local TitleLabel = Instance.new("TextLabel")
-local CloseButton = Instance.new("TextButton")
-local SearchFrame = Instance.new("Frame")
-local SearchBox = Instance.new("TextBox")
-local SearchButton = Instance.new("TextButton")
-local SearchResults = Instance.new("ScrollingFrame")
-local ResultsLayout = Instance.new("UIListLayout")
-local IYButton = Instance.new("TextButton")
-local DexButton = Instance.new("TextButton")
-local NoclipButton = Instance.new("TextButton")
-local FlingButton = Instance.new("TextButton")
-local ToggleButton = Instance.new("TextButton")
+local Frame = Instance.new("Frame")
+local ToggleBtn = Instance.new("TextButton")
 local StatusLabel = Instance.new("TextLabel")
+local CloseBtn = Instance.new("TextButton")
 
 -- GUI Setup
-ScreenGui.Name = "IQObbyHub"
 ScreenGui.Parent = player:WaitForChild("PlayerGui")
 ScreenGui.ResetOnSpawn = false
 
--- Main Frame
-MainFrame.Name = "MainFrame"
-MainFrame.Parent = ScreenGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-MainFrame.BorderSizePixel = 0
-MainFrame.Position = UDim2.new(0.02, 0, 0.25, 0)
-MainFrame.Size = UDim2.new(0, 320, 0, 420)
-MainFrame.Active = true
-MainFrame.Draggable = true
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+Frame.Position = UDim2.new(0.5, -100, 0.1, 0)
+Frame.Size = UDim2.new(0, 200, 0, 120)
+Frame.Active = true
+Frame.Draggable = true
 
--- Title Bar
-TitleBar.Name = "TitleBar"
-TitleBar.Parent = MainFrame
-TitleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
-TitleBar.BorderSizePixel = 0
-TitleBar.Size = UDim2.new(1, 0, 0, 50)
+ToggleBtn.Parent = Frame
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+ToggleBtn.Position = UDim2.new(0.1, 0, 0.2, 0)
+ToggleBtn.Size = UDim2.new(0.8, 0, 0, 40)
+ToggleBtn.Font = Enum.Font.GothamBold
+ToggleBtn.Text = "INSTANT INTERACT: OFF"
+ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleBtn.TextSize = 14
 
-TitleLabel.Name = "TitleLabel"
-TitleLabel.Parent = TitleBar
-TitleLabel.BackgroundTransparency = 1
-TitleLabel.Size = UDim2.new(1, -60, 1, 0)
-TitleLabel.Font = Enum.Font.GothamBold
-TitleLabel.Text = "🧠 IQ OBBY HUB v2.0 | ULTIMATE"
-TitleLabel.TextColor3 = Color3.fromRGB(0, 255, 200)
-TitleLabel.TextSize = 16
-TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-CloseButton.Name = "CloseButton"
-CloseButton.Parent = TitleBar
-CloseButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
-CloseButton.BorderSizePixel = 0
-CloseButton.Position = UDim2.new(1, -35, 0, 10)
-CloseButton.Size = UDim2.new(0, 25, 0, 25)
-CloseButton.Font = Enum.Font.GothamBold
-CloseButton.Text = "✕"
-CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseButton.TextSize = 14
-
--- Search Frame
-SearchFrame.Name = "SearchFrame"
-SearchFrame.Parent = MainFrame
-SearchFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-SearchFrame.Position = UDim2.new(0.05, 0, 0.15, 0)
-SearchFrame.Size = UDim2.new(0.9, 0, 0, 50)
-
-SearchBox.Name = "SearchBox"
-SearchBox.Parent = SearchFrame
-SearchBox.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
-SearchBox.Position = UDim2.new(0, 5, 0, 5)
-SearchBox.Size = UDim2.new(1, -75, 1, -10)
-SearchBox.Font = Enum.Font.Gotham
-SearchBox.PlaceholderText = "Enter part/model name (e.g. Checkpoint5, Stage10)"
-SearchBox.Text = ""
-SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-SearchBox.TextSize = 14
-
-SearchButton.Name = "SearchButton"
-SearchButton.Parent = SearchFrame
-SearchButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-SearchButton.Position = UDim2.new(1, -70, 0, 5)
-SearchButton.Size = UDim2.new(0, 65, 1, -10)
-SearchButton.Font = Enum.Font.GothamBold
-SearchButton.Text = "SEARCH"
-SearchButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-SearchButton.TextSize = 12
-
--- Results Frame
-SearchResults.Name = "SearchResults"
-SearchResults.Parent = MainFrame
-SearchResults.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-SearchResults.Position = UDim2.new(0.05, 0, 0.32, 0)
-SearchResults.Size = UDim2.new(0.9, 0, 0, 120)
-SearchResults.BorderSizePixel = 0
-SearchResults.ScrollBarThickness = 6
-SearchResults.ScrollBarImageColor3 = Color3.fromRGB(0, 170, 255)
-
-ResultsLayout.Parent = SearchResults
-ResultsLayout.SortOrder = Enum.SortOrder.LayoutOrder
-ResultsLayout.Padding = UDim.new(0, 2)
-
--- Quick Buttons
-IYButton.Name = "IYButton"
-IYButton.Parent = MainFrame
-IYButton.BackgroundColor3 = Color3.fromRGB(100, 200, 50)
-IYButton.Position = UDim2.new(0.05, 0, 0.64, 0)
-IYButton.Size = UDim2.new(0.43, 0, 0, 40)
-IYButton.Font = Enum.Font.GothamBold
-IYButton.Text = "🌟 Infinite Yield"
-IYButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-IYButton.TextSize = 13
-
-DexButton.Name = "DexButton"
-DexButton.Parent = MainFrame
-DexButton.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
-DexButton.Position = UDim2.new(0.52, 0, 0.64, 0)
-DexButton.Size = UDim2.new(0.43, 0, 0, 40)
-DexButton.Font = Enum.Font.GothamBold
-DexButton.Text = "🔍 Dex Explorer"
-DexButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-DexButton.TextSize = 13
-
-NoclipButton.Name = "NoclipButton"
-NoclipButton.Parent = MainFrame
-NoclipButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
-NoclipButton.Position = UDim2.new(0.05, 0, 0.77, 0)
-NoclipButton.Size = UDim2.new(0.43, 0, 0, 35)
-NoclipButton.Font = Enum.Font.GothamBold
-NoclipButton.Text = "👻 Noclip"
-NoclipButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-NoclipButton.TextSize = 13
-
-FlingButton.Name = "FlingButton"
-FlingButton.Parent = MainFrame
-FlingButton.BackgroundColor3 = Color3.fromRGB(200, 50, 200)
-FlingButton.Position = UDim2.new(0.52, 0, 0.77, 0)
-FlingButton.Size = UDim2.new(0.43, 0, 0, 35)
-FlingButton.Font = Enum.Font.GothamBold
-FlingButton.Text = "💥 Fling"
-FlingButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-FlingButton.TextSize = 13
-
-ToggleButton.Name = "ToggleButton"
-ToggleButton.Parent = MainFrame
-ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
-ToggleButton.Position = UDim2.new(0.05, 0, 0.90, 0)
-ToggleButton.Size = UDim2.new(0.9, 0, 0, 30)
-ToggleButton.Font = Enum.Font.Gotham
-ToggleButton.Text = "👁️ Hide GUI"
-ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.TextSize = 14
-
-StatusLabel.Name = "StatusLabel"
-StatusLabel.Parent = MainFrame
+StatusLabel.Parent = Frame
 StatusLabel.BackgroundTransparency = 1
-StatusLabel.Position = UDim2.new(0.05, 0, 0.88, 0)
-StatusLabel.Size = UDim2.new(0.9, 0, 0, 25)
+StatusLabel.Position = UDim2.new(0.1, 0, 0.6, 0)
+StatusLabel.Size = UDim2.new(0.8, 0, 0, 25)
 StatusLabel.Font = Enum.Font.Gotham
-StatusLabel.Text = "Ready"
-StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 150)
+StatusLabel.Text = "Walk near buttons..."
+StatusLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 StatusLabel.TextSize = 12
 StatusLabel.TextXAlignment = Enum.TextXAlignment.Left
 
+CloseBtn.Parent = Frame
+CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+CloseBtn.Position = UDim2.new(0.85, 0, 0.05, 0)
+CloseBtn.Size = UDim2.new(0, 25, 0, 25)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextSize = 14
+
 -- Variables
-local noclipEnabled = false
-local noclipConnection = nil
-local results = {}
+local instantInteractEnabled = false
+local interactCount = 0
+local connection = nil
 
--- Functions
-local function clearResults()
-    for _, child in pairs(SearchResults:GetChildren()) do
-        if child:IsA("TextButton") then
-            child:Destroy()
-        end
-    end
-end
-
-local function addResult(name, path)
-    local resultBtn = Instance.new("TextButton")
-    resultBtn.Name = "Result_" .. #results
-    resultBtn.Parent = SearchResults
-    resultBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
-    resultBtn.BorderSizePixel = 0
-    resultBtn.Size = UDim2.new(1, -10, 0, 30)
-    resultBtn.Font = Enum.Font.Gotham
-    resultBtn.Text = name .. " → " .. path
-    resultBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    resultBtn.TextSize = 11
-    resultBtn.TextXAlignment = Enum.TextXAlignment.Left
+-- Toggle Function
+ToggleBtn.MouseButton1Click:Connect(function()
+    instantInteractEnabled = not instantInteractEnabled
+    ToggleBtn.Text = "INSTANT INTERACT: " .. (instantInteractEnabled and "ON" or "OFF")
+    ToggleBtn.BackgroundColor3 = instantInteractEnabled and Color3.fromRGB(50, 255, 50) or Color3.fromRGB(255, 50, 50)
     
-    resultBtn.MouseButton1Click:Connect(function()
-        local char = player.Character
-        if char and char:FindFirstChild("HumanoidRootPart") then
-            local target = workspace:FindFirstChild(name, true)
-            if target and target:IsA("BasePart") then
-                char.HumanoidRootPart.CFrame = target.CFrame + Vector3.new(0, 5, 0)
-                StatusLabel.Text = "✅ Teleported to " .. name
-                StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 100)
-            else
-                StatusLabel.Text = "❌ Target not found: " .. name
-                StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
-            end
-        end
-    end)
-    
-    resultBtn.MouseEnter:Connect(function()
-        resultBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 90)
-    end)
-    
-    resultBtn.MouseLeave:Connect(function()
-        resultBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
-    end)
-end
-
--- Search Function
-SearchButton.MouseButton1Click:Connect(function()
-    local searchTerm = SearchBox.Text:lower()
-    if searchTerm == "" then
-        StatusLabel.Text = "❌ Enter search term"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
-        return
-    end
-    
-    clearResults()
-    results = {}
-    
-    StatusLabel.Text = "🔍 Searching..."
-    StatusLabel.TextColor3 = Color3.fromRGB(255, 165, 0)
-    
-    for _, obj in pairs(workspace:GetDescendants()) do
-        if obj:IsA("BasePart") and obj.Name:lower():find(searchTerm) then
-            table.insert(results, {obj.Name, obj:GetFullName()})
-            addResult(obj.Name, obj:GetFullName())
-        end
-    end
-    
-    SearchResults.CanvasSize = UDim2.new(0, 0, 0, ResultsLayout.AbsoluteContentSize.Y)
-    
-    if #results == 0 then
-        StatusLabel.Text = "❌ No parts found"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+    if instantInteractEnabled then
+        StatusLabel.Text = "Active - Firing prompts instantly!"
+        StatusLabel.TextColor3 = Color3.fromRGB(50, 255, 50)
     else
-        StatusLabel.Text = "✅ Found " .. #results .. " parts"
-        StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 100)
+        StatusLabel.Text = "Inactive"
+        StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
     end
 end)
 
--- Button Functions
-IYButton.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
-    StatusLabel.Text = "🌟 Infinite Yield loaded!"
-    StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 100)
-end)
-
-DexButton.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/Roblox/main/Universal/BypassedDarkDexV3.lua"))()
-    StatusLabel.Text = "🔍 Dex Explorer loaded!"
-    StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 100)
-end)
-
-local noclipEnabled = false
-NoclipButton.MouseButton1Click:Connect(function()
-    noclipEnabled = not noclipEnabled
-    NoclipButton.Text = noclipEnabled and "✅ Noclip ON" or "👻 Noclip"
-    NoclipButton.BackgroundColor3 = noclipEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 100, 100)
-    
-    if noclipEnabled then
-        noclipConnection = RunService.Stepped:Connect(function()
-            local char = player.Character
-            if char then
-                for _, part in pairs(char:GetDescendants()) do
-                    if part:IsA("BasePart") and part.CanCollide then
-                        part.CanCollide = false
-                    end
-                end
-            end
-        end)
-    else
-        if noclipConnection then
-            noclipConnection:Disconnect()
-        end
-    end
-end)
-
-FlingButton.MouseButton1Click:Connect(function()
-    local char = player.Character
-    if char and char:FindFirstChild("HumanoidRootPart") then
-        char.HumanoidRootPart.Velocity = Vector3.new(0, 5000, 0)
-        StatusLabel.Text = "💥 Flinged!"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 255)
-    end
-end)
-
-ToggleButton.MouseButton1Click:Connect(function()
-    MainFrame.Visible = not MainFrame.Visible
-    ToggleButton.Text = MainFrame.Visible and "👁️ Hide GUI" or "👁️ Show GUI"
-end)
-
-CloseButton.MouseButton1Click:Connect(function()
-    if noclipConnection then
-        noclipConnection:Disconnect()
-    end
+CloseBtn.MouseButton1Click:Connect(function()
+    instantInteractEnabled = false
+    if connection then connection:Disconnect() end
     ScreenGui:Destroy()
 end)
 
--- Keyboard shortcuts
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
-    
-    if input.KeyCode == Enum.KeyCode.RightShift then
-        MainFrame.Visible = not MainFrame.Visible
-    elseif input.KeyCode == Enum.KeyCode.F1 then
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+-- Main Instant Interact Logic
+connection = ProximityPromptService.PromptButtonHoldBegan:Connect(function(prompt)
+    if instantInteractEnabled then
+        interactCount = interactCount + 1
+        StatusLabel.Text = "Interactions: " .. interactCount
+        
+        -- Instant fire (bypasses hold duration)
+        fireproximityprompt(prompt)
+        
+        -- Visual feedback
+        StatusLabel.TextColor3 = Color3.fromRGB(0, 255, 100)
+        wait(0.1)
+        StatusLabel.TextColor3 = Color3.fromRGB(50, 255, 50)
     end
 end)
 
-print("🧠 IQ OBBY HUB v2.0 ULTIMATE LOADED!")
-print("📱 Right Shift = Toggle GUI")
-print("🌟 F1 = Infinite Yield")
-print("🔍 Search any part → Click result to TP!")
+-- Keyboard toggle (INSERT key)
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.Insert then
+        ToggleBtn.MouseButton1Click:Fire()
+    end
+end)
+
+print("⚡ INSTANT INTERACT HACK LOADED!")
+print("👆 Click toggle OR press INSERT")
+print("🎮 Walk near E/F/G buttons = INSTANT activation!")
